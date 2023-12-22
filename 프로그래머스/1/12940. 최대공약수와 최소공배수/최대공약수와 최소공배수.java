@@ -1,22 +1,54 @@
+import java.util.*;
+
 class Solution {
-    
-    public static int findGCD(int num1, int num2) {
-        if (num2 == 0) {
-            return num1;
-        }
-        return findGCD(num2, num1 % num2);
-    }
-    
-    public static int findLCM(int num1, int num2) {
-     int gcd = findGCD(num1, num2);
-     int lcm = (num1 * num2) / gcd;
-        return lcm;
-    }
-    
     public int[] solution(int n, int m) {
         int[] answer = new int[2];
-        answer[0] = findGCD(n, m);
-        answer[1] = findLCM(n, m);
-        return answer;
+
+        List<Integer> nList = new ArrayList<>();
+        List<Integer> mList = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+          if (n % i == 0) {
+               nList.add(i);
+            }
+        }
+
+        for (int j = 1; j <= m; j++) {
+            if (m % j == 0) {
+               mList.add(j);
+          }
+        }
+
+        for (int i = 0; i < nList.size(); i++) {
+           for (int j = 0; j < mList.size(); j++) {
+              if (nList.get(i).equals(mList.get(j))) {
+                 answer[0] = nList.get(i);
+                 break;
+               }
+           }
+        }
+         
+        List<Integer> nList2 = new ArrayList<>(); 
+        List<Integer> mList2 = new ArrayList<>(); 
+        
+        for(int i = 0 ; i < m ; i++) {
+            nList2.add(n * (i+1)); 
+        }
+        
+        for(int i = 0 ; i < n ; i++) {
+            mList2.add(m * (i+1)); 
+        }
+        
+        for(int i = 0 ; i < m ; i++) {
+            if(answer[1] != 0){
+                break;
+            }
+           for(int j = 0 ; j < n ; j++){
+               if(nList2.get(i).equals(mList2.get(j))){
+                   answer[1] = mList2.get(j);
+               }
+           }  
+        }
+        
+        return answer; 
     }
 }
